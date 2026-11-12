@@ -1,0 +1,22 @@
+.pdf-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:20px;
+}
+
+.pdf-grid button{
+background:#003366;
+color:white;
+padding:15px;
+border-radius:10px;
+cursor:pointer;
+border:none;
+}
+
+#visorPDF{
+width:100%;
+height:700px;
+border:none;
+border-radius:20px;
+}

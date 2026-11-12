@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conocimientos - Personal CIEPS</title>
+  <style>
+    :root {
+      --v1: #1a4d2e;
+      --v2: #2d7a4f;
+      --v3: #3d9966;
+      --v4: #4caf7d;
+      --v5: #7ecba1;
+      --v6: #b2dfc4;
+      --v7: #d6f0e0;
+      --blanco: #ffffff;
+      --fondo: #f0f7f3;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--fondo);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    header .badge {
+      display: inline-block;
+      background: var(--v2);
+      color: var(--blanco);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--v1);
+      line-height: 1.2;
+    }
+    header p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--v2);
+    }
+    header .linea {
+      width: 56px; height: 4px;
+      background: var(--v4);
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    /* ── Mapa mental canvas ── */
+    .mindmap {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* SVG de líneas */
+    .mindmap svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* ── Nodo central ── */
+    .center-node {
+      position: relative;
+      z-index: 10;
+      background: var(--v1);
+      color: var(--blanco);
+      border-radius: 50%;
+      width: 150px; height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 24px rgba(26,77,46,0.35);
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .center-node .icon { font-size: 1.8rem; margin-bottom: 6px; }
+
+    /* ── Layout de ramas ── */
+    .branches-layout {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px 30px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .col-left  { display: flex; flex-direction: column; gap: 20px; align-items: flex-end; }
+    .col-right { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+    .col-center { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+    /* ── Tarjeta de rama ── */
+    .branch {
+      width: 220px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(26,77,46,0.12);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .branch:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(26,77,46,0.2); }
+
+    .branch-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blanco);
+    }
+    .branch-header .b-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .branch-header .b-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      line-height: 1.3;
+    }
+    .branch-header .b-arrow {
+      margin-left: auto;
+      font-size: 0.7rem;
+      transition: transform 0.3s;
+      opacity: 0.8;
+    }
+    .branch.open .branch-header .b-arrow { transform: rotate(180deg); }
+
+    .branch-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: var(--blanco);
+    }
+    .branch.open .branch-body { max-height: 300px; }
+
+    .branch-body ul {
+      list-style: none;
+      padding: 12px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .branch-body ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: #1a2e22;
+    }
+    .branch-body ul li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      margin-top: 5px;
+    }
+
+    /* Colores por rama */
+    .b1 .branch-header { background: var(--v1); }
+    .b1 .branch-body ul li::before { background: var(--v1); }
+
+    .b2 .branch-header { background: var(--v2); }
+    .b2 .branch-body ul li::before { background: var(--v2); }
+
+    .b3 .branch-header { background: var(--v3); }
+    .b3 .branch-body ul li::before { background: var(--v3); }
+
+    .b4 .branch-header { background: var(--v4); }
+    .b4 .branch-body ul li::before { background: var(--v4); }
+
+    .b5 .branch-header { background: #2a6b45; }
+    .b5 .branch-body ul li::before { background: #2a6b45; }
+
+    /* ── Layout general del mapa ── */
+    .map-container {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 160px 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 24px 32px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .map-center {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    /* Ramas izquierda */
+    .r-topleft    { grid-column: 1; grid-row: 1; justify-self: end; }
+    .r-middleleft { grid-column: 1; grid-row: 2; justify-self: end; }
+    .r-bottomleft { grid-column: 1; grid-row: 3; justify-self: end; }
+
+    /* Ramas derecha */
+    .r-topright    { grid-column: 3; grid-row: 1; justify-self: start; }
+    .r-middleright { grid-column: 3; grid-row: 2; justify-self: start; }
+
+    /* Conectores SVG */
+    .connectors {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 1;
+    }
+
+    .wrap {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* ── Instrucción ── */
+    .hint {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blanco);
+      border: 1px solid var(--v6);
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      color: var(--v2);
+    }
+
+    footer {
+      margin-top: 48px;
+      font-size: 0.75rem;
+      color: var(--v2);
+      opacity: 0.65;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .map-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: unset;
+      }
+      .map-center, .r-topleft, .r-middleleft, .r-bottomleft,
+      .r-topright, .r-middleright {
+        grid-column: 1; grid-row: unset;
+        justify-self: center;
+      }
+      .connectors { display: none; }
+      .center-node { width: 130px; height: 130px; font-size: 0.7rem; }
+    }
+
+    /* ── Topbar y Nav ── */
+    .topbar {
+      background: var(--v1);
+      padding: 9px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+    .topbar img.logo {
+      height: 46px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .topbar-text .ins {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .topbar-text .nombre {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .nav-bar {
+      background: var(--v1);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 0 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2px;
+      width: 100%;
+    }
+    .nav-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover, .nav-bar a.active {
+      color: #ffffff;
+      border-bottom-color: var(--v4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <img class="logo"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_colombian_national_police.svg/120px-Coat_of_arms_of_colombian_national_police.svg.png"
+      alt="Escudo Policía Nacional"
+      onerror="this.style.display='none'"/>
+    <div class="topbar-text">
+      <span class="ins">República de Colombia</span>
+      <span class="nombre">Policía Nacional de Colombia</span>
+    </div>
+  </div>
+  <!-- NAV -->
+  <nav class="nav-bar">
+    <a href="index.html">🏠 Inicio</a>
+    <a href="funciones.html">📋 Funciones</a>
+    <a href="mapa mental.html" class="active">🧠 Conocimientos</a>
+    <a href="irisp1.html">📊 IRISP-1</a>
+    <a href="pdf.html">📄 Documentos</a>
+  </nav>
+
+  <header>
+    <div class="badge">Sala CIEPS</div>
+    <h1>Conocimientos del Personal</h1>
+    <p>Haz clic en cada nodo para explorar los conocimientos técnicos</p>
+    <div class="linea"></div>
+  </header>
+
+  <div class="wrap" id="mapWrap">
+
+    <!-- SVG de líneas de conexión -->
+    <svg class="connectors" id="svgLines"></svg>
+
+    <div class="map-container" id="mapContainer">
+
+      <!-- Nodo central -->
+      <div class="map-center" id="centerNode">
+        <div class="center-node">
+          <span class="icon">🧠</span>
+          Conocimientos<br>Técnicos<br>CIEPS
+        </div>
+      </div>
+
+      <!-- Izquierda -->
+      <div class="branch b1 r-topleft" id="b1" onclick="toggleBranch(this)">
+        <div class="branch-header">
+          <span class="b-icon">📈</span>
+          <span class="b-title">Estadística</span>
+          <span class="b-arrow">▼</span>
+        </div>
+        <div class="branch-body">
+          <ul>
+            <li>Estadística descriptiva</li>
+            <li>Medidas de tendencia central</li>
+            <li>Análisis de series de tiempo</li>
+            <li>Proyecciones y tendencias</li>
+            <li>Indicadores de gestión</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="branch b2 r-middleleft" id="b2" onclick="toggleBranch(this)">
+        <div class="branch-header">
+          <span class="b-icon">🗺️</span>
+          <span class="b-title">Sistemas de Información Geográfica (SIG)</span>
+          <span class="b-arrow">▼</span>
+        </div>
+        <div class="branch-body">
+          <ul>
+            <li>ArcGIS</li>
+            <li>QGIS</li>
+            <li>Google Earth Pro</li>
+            <li>Georreferenciación</li>
+            <li>Análisis espacial</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="branch b3 r-bottomleft" id="b3" onclick="toggleBranch(this)">
+        <div class="branch-header">
+          <span class="b-icon">💻</span>
+          <span class="b-title">Herramientas Ofimáticas</span>
+          <span class="b-arrow">▼</span>
+        </div>
+        <div class="branch-body">
+          <ul>
+            <li>Microsoft Excel avanzado</li>
+            <li>Tablas dinámicas</li>
+            <li>Power Query</li>
+            <li>Power BI</li>
+            <li>Microsoft PowerPoint</li>
+            <li>Microsoft Word</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Derecha -->
+      <div class="branch b4 r-topright" id="b4" onclick="toggleBranch(this)">
+        <div class="branch-header">
+          <span class="b-icon">🔍</span>
+          <span class="b-title">Análisis de Información</span>
+          <span class="b-arrow">▼</span>
+        </div>
+        <div class="branch-body">
+          <ul>
+            <li>Minería de datos</li>
+            <li>Análisis criminal</li>
+            <li>Gestión de bases de datos</li>
+            <li>Interpretación de indicadores</li>
+            <li>Elaboración de diagnósticos de seguridad</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="branch b5 r-middleright" id="b5" onclick="toggleBranch(this)">
+        <div class="branch-header">
+          <span class="b-icon">🏛️</span>
+          <span class="b-title">Sistemas Institucionales</span>
+          <span class="b-arrow">▼</span>
+        </div>
+        <div class="branch-body">
+          <ul>
+            <li>Aplicativos de la Policía Nacional</li>
+            <li>Sistemas de registro estadístico</li>
+            <li>Plataformas de consulta y monitoreo institucional</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /map-container -->
+  </div><!-- /wrap -->
+
+  <div class="hint">
+    <span>💡</span>
+    <span>Haz clic en cada rama para ver sus elementos</span>
+  </div>
+
+  <footer>Sala CIEPS — Centro de Investigación Estratégica Policial</footer>
+
+  <script>
+    function toggleBranch(el) {
+      el.classList.toggle('open');
+      setTimeout(drawLines, 420);
+    }
+
+    /* ── Dibuja líneas curvas desde el centro hacia cada rama ── */
+    function drawLines() {
+      const svg = document.getElementById('svgLines');
+      const wrap = document.getElementById('mapWrap');
+      const wRect = wrap.getBoundingClientRect();
+
+      const centerEl = document.getElementById('centerNode');
+      const cRect = centerEl.getBoundingClientRect();
+      const cx = cRect.left - wRect.left + cRect.width / 2;
+      const cy = cRect.top  - wRect.top  + cRect.height / 2;
+
+      const branches = [
+        { id: 'b1', color: '#1a4d2e' },
+        { id: 'b2', color: '#2d7a4f' },
+        { id: 'b3', color: '#3d9966' },
+        { id: 'b4', color: '#4caf7d' },
+        { id: 'b5', color: '#2a6b45' },
+      ];
+
+      let paths = '';
+      branches.forEach(({ id, color }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const bx = r.left - wRect.left + r.width / 2;
+        const by = r.top  - wRect.top  + r.height / 2;
+
+        // Punto de salida en el nodo central hacia la rama
+        const dx = bx - cx;
+        const dy = by - cy;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        const startX = cx + (dx / dist) * 75;
+        const startY = cy + (dy / dist) * 75;
+
+        // Punto de entrada en la rama
+        const endX = bx < cx ? r.right  - wRect.left : r.left - wRect.left;
+        const endY = by;
+
+        // Control point para curva suave
+        const mx = (startX + endX) / 2;
+        const my = (startY + endY) / 2;
+
+        paths += `<path d="M${startX},${startY} Q${mx},${startY} ${endX},${endY}"
+                    stroke="${color}" stroke-width="2.5" fill="none"
+                    stroke-dasharray="6 4" opacity="0.6"/>`;
+      });
+
+      svg.innerHTML = paths;
+    }
+
+    // Dibujar al cargar y al redimensionar
+    window.addEventListener('load', () => setTimeout(drawLines, 100));
+    window.addEventListener('resize', drawLines);
+  </script>
+
+</body>
+</html>

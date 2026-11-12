@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Funciones del Personal - Sala CIEPS</title>
+  <style>
+    /* ── Variables de color ── */
+    :root {
+      --verde-oscuro:  #1a4d2e;
+      --verde-medio:   #2d7a4f;
+      --verde-claro:   #4caf7d;
+      --verde-suave:   #a8d5b5;
+      --verde-palido:  #d6eed e;
+      --blanco:        #ffffff;
+      --gris-suave:    #f4f9f6;
+      --texto-oscuro:  #1a2e22;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gris-suave);
+      color: var(--texto-oscuro);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── Encabezado ── */
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    header .badge {
+      display: inline-block;
+      background: var(--verde-medio);
+      color: var(--blanco);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--verde-oscuro);
+      line-height: 1.2;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--verde-medio);
+      max-width: 500px;
+      margin-inline: auto;
+    }
+
+    header .linea {
+      width: 60px;
+      height: 4px;
+      background: var(--verde-claro);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    /* ── Contenedor de tarjetas ── */
+    .cards-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 18px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* ── Tarjeta ── */
+    .card {
+      background: var(--blanco);
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(26,77,46,0.10);
+      flex: 1 1 180px;
+      max-width: 210px;
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 28px rgba(26,77,46,0.18);
+      transform: translateY(-4px);
+      border-color: var(--verde-claro);
+    }
+
+    .card.open {
+      max-width: 100%;
+      flex: 1 1 100%;
+      border-color: var(--verde-medio);
+    }
+
+    /* ── Cabecera de la tarjeta ── */
+    .card-header {
+      background: var(--verde-oscuro);
+      color: var(--blanco);
+      padding: 20px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .card.open .card-header {
+      background: var(--verde-medio);
+    }
+
+    .card-header .num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+    }
+
+    .card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-size: 0.75rem;
+      opacity: 0.7;
+      transition: transform 0.3s;
+    }
+
+    .card.open .card-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* ── Contenido desplegable ── */
+    .card-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s ease, padding 0.3s;
+      padding: 0 18px;
+    }
+
+    .card.open .card-body {
+      max-height: 500px;
+      padding: 20px 18px 24px;
+    }
+
+    .card-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-body ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--texto-oscuro);
+    }
+
+    .card-body ul li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--verde-claro);
+      margin-top: 6px;
+    }
+
+    /* ── Pie de página ── */
+    footer {
+      margin-top: 56px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--verde-medio);
+      opacity: 0.7;
+    }
+
+    /* ── Topbar y Nav ── */
+    .topbar {
+      background: var(--verde-oscuro);
+      padding: 9px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+    .topbar img.logo {
+      height: 46px;
+      width: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .topbar-text .ins {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+    .topbar-text .nombre {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .nav-bar {
+      background: var(--verde-oscuro);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 0 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2px;
+      width: 100%;
+    }
+    .nav-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover, .nav-bar a.active {
+      color: #ffffff;
+      border-bottom-color: var(--verde-claro);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <img class="logo"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_colombian_national_police.svg/120px-Coat_of_arms_of_colombian_national_police.svg.png"
+      alt="Escudo Policía Nacional"
+      onerror="this.style.display='none'"/>
+    <div class="topbar-text">
+      <span class="ins">República de Colombia</span>
+      <span class="nombre">Policía Nacional de Colombia</span>
+    </div>
+  </div>
+  <!-- NAV -->
+  <nav class="nav-bar">
+    <a href="index.html">🏠 Inicio</a>
+    <a href="funciones.html" class="active">📋 Funciones</a>
+    <a href="mapa mental.html">🧠 Conocimientos</a>
+    <a href="irisp1.html">📊 IRISP-1</a>
+    <a href="pdf.html">📄 Documentos</a>
+  </nav>
+
+  <header>
+    <div class="badge">Sala CIEPS</div>
+    <h1>Funciones del Personal</h1>
+    <p>Selecciona una función para conocer sus responsabilidades</p>
+    <div class="linea"></div>
+  </header>
+
+  <div class="cards-wrapper" id="cardsContainer">
+
+    <!-- 1 -->
+    <div class="card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="num">1</div>
+        <div class="card-icon">📥</div>
+        <div class="card-title">Recolección y Consolidación de Información</div>
+        <span class="card-arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Recopilar información proveniente de estaciones, SIJIN, SIPOL, Gaula y otras entidades.</li>
+          <li>Consolidar datos estadísticos sobre delitos, contravenciones y fenómenos de seguridad.</li>
+          <li>Verificar la calidad y confiabilidad de la información recibida.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="num">2</div>
+        <div class="card-icon">📊</div>
+        <div class="card-title">Análisis Estadístico y Criminológico</div>
+        <span class="card-arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Elaborar análisis de comportamiento delictivo.</li>
+          <li>Identificar tendencias, patrones y modalidades delincuenciales.</li>
+          <li>Generar indicadores de gestión operativa y preventiva.</li>
+          <li>Elaborar boletines estadísticos diarios, semanales y mensuales.</li>
+          <li>Realizar análisis comparativos por periodos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="num">3</div>
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Análisis Geográfico y Cartográfico</div>
+        <span class="card-arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Georreferenciar hechos delictivos.</li>
+          <li>Elaborar mapas temáticos y de calor.</li>
+          <li>Identificar zonas críticas o "hot spots".</li>
+          <li>Apoyar la planeación del servicio policial mediante cartografía.</li>
+          <li>Actualizar capas geográficas y bases cartográficas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="num">4</div>
+        <div class="card-icon">📄</div>
+        <div class="card-title">Producción de Documentos Estratégicos</div>
+        <span class="card-arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Elaborar informes ejecutivos para mandos institucionales.</li>
+          <li>Construir presentaciones para comités y consejos de seguridad.</li>
+          <li>Diseñar tableros de control e indicadores.</li>
+          <li>Generar alertas tempranas frente a comportamientos inusuales.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="card" onclick="toggleCard(this)">
+      <div class="card-header">
+        <div class="num">5</div>
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Apoyo a la Toma de Decisiones</div>
+        <span class="card-arrow">▼</span>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li>Presentar análisis situacionales.</li>
+          <li>Recomendar estrategias operativas basadas en evidencia.</li>
+          <li>Apoyar la focalización del servicio policial.</li>
+          <li>Realizar seguimiento a planes operativos y resultados obtenidos.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Sala CIEPS &mdash; Centro de Investigación Estratégica Policial</footer>
+
+  <script>
+    function toggleCard(card) {
+      const isOpen = card.classList.contains('open');
+      // Cierra todas
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+      // Si no estaba abierta, ábrela
+      if (!isOpen) card.classList.add('open');
+    }
+  </script>
+
+</body>
+</html>

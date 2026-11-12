@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sala CIEPS MEBOG — Infografía</title>
+  <style>
+    :root{
+      --bg0:#060e1a; --bg1:#0a1628; --bg2:#0d1e35; --bg3:#112240; --bg4:#1a3a5c;
+      --cyan:#00d4ff; --cyan2:#00e5ff;
+      --neon:#39ff14; --neon2:#4dff2a;
+      --verde:#1db954; --verde2:#00c851;
+      --blanco:#ffffff; --gris:#b0c4d8; --gris2:#d0dde8;
+      --oro:#f0d000;
+      --panel:rgba(13,30,53,0.92); --panel2:rgba(10,22,40,0.85);
+      --borde:rgba(0,212,255,0.25); --borde2:rgba(57,255,20,0.3);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--bg0);color:var(--blanco);font-size:17px;}
+    .page{max-width:100vw;margin:0 auto;overflow:hidden;}
+    /* Escala global de texto — todos los rem se multiplican */
+    html{font-size:17px;}
+
+    /* ══ HEADER ══ */
+    .header{
+      background:linear-gradient(rgba(6,14,26,.38),rgba(6,14,26,.38)),url('imagenes/Header.jpg') center/cover no-repeat;
+      display:grid;grid-template-columns:220px 1fr 200px;
+      align-items:center;padding:16px 28px;gap:16px;
+      border-bottom:2px solid var(--cyan);position:relative;overflow:hidden;
+    }
+    .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--cyan),var(--neon),var(--cyan),transparent);}
+    .h-logo{display:flex;align-items:center;gap:14px;}
+    .h-logo img{width:90px;height:90px;border-radius:50%;border:2px solid var(--cyan);
+      box-shadow:0 0 18px rgba(0,212,255,.55),0 0 36px rgba(0,212,255,.2);object-fit:cover;}
+    .h-logo-text .ht-rep{display:block;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;color:var(--gris);line-height:1.5;white-space:nowrap;}
+    .h-logo-text .ht-lema{display:block;font-size:0.8rem;color:var(--cyan);font-style:italic;margin-top:2px;}
+    .h-title{text-align:center;}
+    .h-title .ht-sala{font-size:2rem;font-weight:900;letter-spacing:7px;color:var(--blanco);text-transform:uppercase;line-height:1;}
+    .h-title .ht-cieps{font-size:5.5rem;font-weight:900;letter-spacing:5px;line-height:1;
+      background:linear-gradient(90deg,var(--cyan),var(--blanco),var(--cyan));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .h-title .ht-mebog{display:inline-block;font-size:2.2rem;font-weight:900;letter-spacing:6px;line-height:1.2;
+      background:linear-gradient(90deg,var(--verde),var(--neon),var(--verde));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .h-title .ht-sub{font-size:1rem;color:var(--gris);letter-spacing:.5px;margin-top:6px;}
+    .h-tags{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+    .h-tag{font-size:0.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:4px;}
+    .h-tag.cyan{border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);text-shadow:0 0 8px rgba(0,212,255,.6);}
+    .h-tag.neon{border:1px solid var(--neon);color:var(--neon);background:rgba(57,255,20,.08);text-shadow:0 0 8px rgba(57,255,20,.6);}
+
+    /* ══ SEC 1+2 FUNCIONES + CONOCIMIENTOS ══ */
+    .sec12{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--borde);}
+    .sec-title{display:flex;align-items:center;gap:9px;font-size:1.1rem;font-weight:800;
+      text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;}
+    .sec-title .st-ic{font-size:1.3rem;color:var(--cyan);text-shadow:0 0 8px rgba(0,212,255,.7);}
+    .sec-title span{color:var(--cyan);text-shadow:0 0 6px rgba(0,212,255,.4);}
+
+    /* —— FUNCIONES DESPLEGABLES —— */
+    .funciones{background:var(--panel);padding:18px 20px;border-right:1px solid var(--borde);}
+    .func-accordion{display:flex;flex-direction:column;gap:9px;}
+
+    .fa-item{border:1px solid rgba(255,255,255,.2);border-radius:10px;overflow:hidden;
+      background:rgba(10,22,40,.7);transition:border-color .25s,box-shadow .25s;}
+    .fa-item.open{border-color:var(--fa-accent,var(--cyan));}
+
+    .fa-trigger{
+      width:100%;background:none;border:none;cursor:pointer;
+      display:flex;align-items:center;gap:12px;padding:14px 16px;text-align:left;
+      transition:background .2s;
+    }
+    .fa-trigger:hover{background:rgba(255,255,255,.08);}
+
+    .fa-num{width:32px;height:32px;border-radius:8px;flex-shrink:0;
+      background:rgba(255,255,255,.1);border:1.5px solid var(--fa-accent,var(--cyan));
+      color:var(--fa-accent,var(--cyan));font-size:0.9rem;font-weight:800;
+      display:flex;align-items:center;justify-content:center;
+      text-shadow:0 0 6px rgba(0,212,255,.7);}
+    .fa-icon{font-size:1.6rem;flex-shrink:0;}
+    .fa-label{flex:1;font-size:1.05rem;font-weight:700;color:var(--blanco);line-height:1.2;}
+    .fa-arrow{font-size:0.85rem;color:var(--fa-accent,var(--cyan));transition:transform .3s;flex-shrink:0;}
+    .fa-item.open .fa-arrow{transform:rotate(180deg);}
+
+    /* Colores por ítem */
+    .fa-item:nth-child(1){--fa-accent:#72efb0;background:linear-gradient(135deg,#117852,#0b4a3c);}
+    .fa-item:nth-child(2){--fa-accent:#78cfff;background:linear-gradient(135deg,#176db2,#104b83);}
+    .fa-item:nth-child(3){--fa-accent:#ffd18a;background:linear-gradient(135deg,#ae620f,#71400f);}
+    .fa-item:nth-child(4){--fa-accent:#e0b0ff;background:linear-gradient(135deg,#74409a,#49275f);}
+    .fa-item:nth-child(5){--fa-accent:#ff9b9f;background:linear-gradient(135deg,#ad343c,#6d202b);}
+
+    .fa-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+    .fa-item.open .fa-body{max-height:400px;}
+    .fa-content{padding:4px 16px 16px 60px;}
+    .fa-content ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .fa-content ul li{font-size:0.95rem;line-height:1.6;color:var(--gris2);
+      padding-left:16px;position:relative;}
+    .fa-content ul li::before{content:'▸';position:absolute;left:0;color:var(--fa-accent,var(--cyan));font-size:.9rem;}
+
+    /* ══ CONOCIMIENTOS — MAPA MENTAL ══ */
+    .conocimientos{
+      background:var(--panel2);
+      padding:22px 20px 26px;
+      position:relative;overflow:hidden;
+    }
+    /* Cerebro solo como fondo */
+    .conocimientos::before{
+      content:'';position:absolute;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:380px;height:380px;
+      background:url('imagenes/cerebro.png') center center / contain no-repeat;
+      opacity:0.12;pointer-events:none;z-index:0;
+    }
+    .conocimientos > *{position:relative;z-index:1;}
+
+    .conoc-sub{
+      text-align:center;font-size:0.82rem;font-weight:600;
+      color:var(--gris);letter-spacing:1px;text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    /* Grid limpio 2 columnas × 3 filas — sin elemento cerebro en el DOM */
+    .conoc-map{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    /* Tarjetas */
+    .conoc-card{
+      border-radius:11px;overflow:hidden;
+      border:1px solid var(--borde);
+      background:#edf6fb;
+      cursor:pointer;
+      transition:border-color .25s, transform .2s, box-shadow .25s;
+    }
+    .conoc-card:nth-child(1){--card-accent:#17669a;background:linear-gradient(135deg,#f3f9ff,#dcecf8);border-color:#94c5e1;}
+    .conoc-card:nth-child(2){--card-accent:#137b83;background:linear-gradient(135deg,#f0fbfb,#d7eff0);border-color:#8bcdd0;}
+    .conoc-card:nth-child(3){--card-accent:#28794a;background:linear-gradient(135deg,#f1fbf4,#dcefe2);border-color:#9fcfaf;}
+    .conoc-card:nth-child(4){--card-accent:#176d91;background:linear-gradient(135deg,#f1faff,#d9edf5);border-color:#8dc5d9;}
+    .conoc-card:nth-child(5){--card-accent:#28777e;background:linear-gradient(135deg,#f2fafa,#dceeee);border-color:#96c9cb;}
+    .conoc-card:hover{
+      transform:translateY(-3px) scale(1.02);
+      box-shadow:0 8px 28px rgba(0,212,255,.2);
+    }
+    /* Tarjeta que ocupa toda la fila al final */
+    .conoc-card.full{grid-column:1/-1;}
+
+    .conoc-head{
+      padding:9px 12px;display:flex;align-items:center;gap:9px;
+      border-bottom:1px solid rgba(19,45,68,.12);
+    }
+    .conoc-head .c-icon{font-size:1.3rem;flex-shrink:0;}
+    .conoc-head .c-title{font-size:0.85rem;font-weight:800;line-height:1.2;flex:1;color:var(--card-accent);}
+    .conoc-head .c-hint{font-size:0.65rem;opacity:.7;white-space:nowrap;color:#19344a;}
+
+    .conoc-head.cc1{background:rgba(255,255,255,.55);}
+    .conoc-head.cc2{background:rgba(255,255,255,.55);}
+    .conoc-head.cc3{background:rgba(255,255,255,.55);}
+    .conoc-head.cc4{background:rgba(255,255,255,.55);}
+    .conoc-head.cc5{background:rgba(255,255,255,.55);}
+
+    .conoc-preview{
+      padding:9px 12px 11px;
+      font-size:0.75rem;color:#19344a;line-height:1.5;
+    }
+
+    /* ══ MODAL DE CONOCIMIENTO ══ */
+    .conoc-modal-bg{
+      display:none;
+      position:fixed;inset:0;z-index:9999;
+      background:rgba(6,14,26,.88);
+      backdrop-filter:blur(6px);
+      align-items:center;justify-content:center;
+      padding:20px;
+    }
+    .conoc-modal-bg.show{display:flex;}
+
+    .conoc-modal{
+      background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);
+      border-radius:18px;
+      border:1px solid var(--borde);
+      box-shadow:0 0 60px rgba(0,212,255,.2), 0 0 120px rgba(0,212,255,.08);
+      max-width:700px;width:100%;
+      overflow:hidden;
+      animation:modalIn .3s ease;
+    }
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+
+    .modal-head{
+      padding:20px 24px;display:flex;align-items:center;gap:14px;
+      border-bottom:1px solid var(--borde);
+    }
+    .modal-head .m-icon{font-size:2.2rem;flex-shrink:0;}
+    .modal-head .m-title{font-size:1.5rem;font-weight:900;line-height:1.1;}
+    .modal-head .m-sub{font-size:0.8rem;opacity:.7;margin-top:4px;}
+    .modal-close{
+      margin-left:auto;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);border-radius:8px;
+      color:var(--blanco);font-size:1.2rem;cursor:pointer;
+      padding:6px 12px;transition:background .2s;flex-shrink:0;
+    }
+    .modal-close:hover{background:rgba(0,212,255,.2);border-color:var(--cyan);}
+
+    .modal-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .modal-body.single{grid-template-columns:1fr;}
+
+    .modal-item{
+      background:rgba(10,22,40,.7);border-radius:10px;
+      border:1px solid var(--borde);padding:14px 16px;
+      display:flex;align-items:flex-start;gap:12px;
+    }
+    .modal-item .mi-num{
+      flex-shrink:0;width:30px;height:30px;border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.85rem;font-weight:800;
+    }
+    .modal-item .mi-text{font-size:0.9rem;line-height:1.55;color:var(--gris2);}
+
+    /* Colores del modal por tipo */
+    .modal-cc1 .modal-head{background:linear-gradient(135deg,rgba(0,212,255,.18),rgba(0,212,255,.04));}
+    .modal-cc1 .modal-head .m-title{color:var(--cyan);}
+    .modal-cc1 .modal-item .mi-num{background:rgba(0,212,255,.15);color:var(--cyan);border:1px solid rgba(0,212,255,.4);}
+
+    .modal-cc2 .modal-head{background:linear-gradient(135deg,rgba(57,255,20,.14),rgba(57,255,20,.03));}
+    .modal-cc2 .modal-head .m-title{color:var(--neon);}
+    .modal-cc2 .modal-item .mi-num{background:rgba(57,255,20,.1);color:var(--neon);border:1px solid rgba(57,255,20,.35);}
+
+    .modal-cc3 .modal-head{background:linear-gradient(135deg,rgba(0,200,81,.18),rgba(0,200,81,.04));}
+    .modal-cc3 .modal-head .m-title{color:var(--verde2);}
+    .modal-cc3 .modal-item .mi-num{background:rgba(0,200,81,.12);color:var(--verde2);border:1px solid rgba(0,200,81,.35);}
+
+    .modal-cc4 .modal-head{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(0,229,255,.03));}
+    .modal-cc4 .modal-head .m-title{color:var(--cyan2);}
+    .modal-cc4 .modal-item .mi-num{background:rgba(0,229,255,.1);color:var(--cyan2);border:1px solid rgba(0,229,255,.35);}
+
+    .modal-cc5 .modal-head{background:linear-gradient(135deg,rgba(29,185,84,.18),rgba(29,185,84,.04));}
+    .modal-cc5 .modal-head .m-title{color:var(--verde);}
+    .modal-cc5 .modal-item .mi-num{background:rgba(29,185,84,.12);color:var(--verde);border:1px solid rgba(29,185,84,.35);}
+
+    /* ══ MODAL DE IMAGEN COMPLETA ══ */
+    .img-modal-bg{
+      display:none;
+      position:fixed;inset:0;z-index:10000;
+      background:rgba(4,10,20,.96);
+      backdrop-filter:blur(8px);
+      align-items:center;justify-content:center;
+      flex-direction:column;
+      gap:16px;
+      padding:20px;
+    }
+    .img-modal-bg.show{display:flex;}
+
+    .img-modal-wrap{
+      position:relative;
+      max-width:95vw;max-height:88vh;
+      border-radius:16px;overflow:hidden;
+      border:1.5px solid var(--borde);
+      box-shadow:0 0 60px rgba(0,212,255,.25),0 0 120px rgba(0,212,255,.08);
+      animation:modalIn .3s ease;
+    }
+    .img-modal-wrap img{
+      display:block;
+      max-width:95vw;max-height:85vh;
+      width:auto;height:auto;
+      object-fit:contain;
+    }
+
+    .img-modal-bar{
+      display:flex;align-items:center;justify-content:space-between;
+      width:100%;max-width:95vw;
+    }
+    .img-modal-title{
+      font-size:1.1rem;font-weight:800;letter-spacing:1px;
+      text-transform:uppercase;color:var(--blanco);
+    }
+    .img-modal-title.macri-t{color:var(--neon);text-shadow:0 0 10px rgba(57,255,20,.6);}
+    .img-modal-title.calidad-t{color:var(--verde2);text-shadow:0 0 10px rgba(0,200,81,.6);}
+
+    .img-close-btn{
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+      border-radius:10px;color:var(--blanco);font-size:1.3rem;
+      cursor:pointer;padding:8px 16px;
+      transition:background .2s,border-color .2s;
+    }
+    .img-close-btn:hover{background:rgba(0,212,255,.2);border-color:var(--cyan);}
+
+    /* ══ CENTRAL ══ */
+    .central{position:relative;min-height:400px;overflow:hidden;}
+    .central-img{position:absolute;inset:0;background:url('imagenes/fondo.png') center center / cover no-repeat;}
+    .central-overlay{position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(6,14,26,.5) 0%,rgba(6,14,26,.18) 30%,rgba(6,14,26,.18) 70%,rgba(6,14,26,.65) 100%);}
+    .central-lines{position:absolute;inset:0;
+      background-image:linear-gradient(90deg,rgba(0,212,255,.05) 1px,transparent 1px),linear-gradient(0deg,rgba(0,212,255,.04) 1px,transparent 1px);
+      background-size:60px 60px;}
+    .central-content{position:relative;z-index:2;min-height:400px;}
+    .bogota-label{position:absolute;left:24px;top:24px;z-index:3;}
+    .bogota-label .bl-ciudad{font-size:1.6rem;font-weight:900;letter-spacing:1px;color:var(--blanco);text-shadow:0 2px 10px rgba(0,0,0,.8);}
+    .bogota-label .bl-sub{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--gris2);opacity:.85;}
+    .central-tags{position:absolute;right:24px;top:24px;z-index:3;display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+    .ct-tag{font-size:0.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--blanco);text-shadow:0 0 10px rgba(57,255,20,.8);}
+    .ct-tag::before{content:'//';margin-right:5px;color:var(--neon);text-shadow:0 0 8px rgba(57,255,20,.9);}
+
+    /* ══ PROCESOS — BOTONES GRANDES ══ */
+    .procesos-wrap{background:linear-gradient(180deg,var(--bg2),var(--bg1));padding:20px 20px 0;}
+    .procesos-title{
+      text-align:center;font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;
+      color:var(--cyan);text-shadow:0 0 12px rgba(0,212,255,.5);
+      border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);
+      padding:10px;margin-bottom:18px;
+    }
+
+    /* Botones de selección */
+    .proc-tabs{display:flex;gap:12px;margin-bottom:18px;}
+    .proc-tab{
+      flex:1;padding:18px 10px;border-radius:12px;cursor:pointer;
+      border:2px solid transparent;background:rgba(10,22,40,.7);
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      transition:all .3s;
+    }
+    .proc-tab:hover{transform:translateY(-3px);}
+    .proc-tab .pt-icon{font-size:2.4rem;}
+    .proc-tab .pt-name{font-size:1.3rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;line-height:1;}
+    .proc-tab .pt-sub{font-size:0.72rem;line-height:1.3;text-align:center;color:rgba(255,255,255,.92);opacity:1;}
+
+    .proc-tab.tab-irisp{border-color:#50d797;background:linear-gradient(135deg,#168754,#07573e);}
+    .proc-tab.tab-irisp .pt-name{color:#fff;text-shadow:0 0 10px rgba(80,215,151,.55);}
+    .proc-tab.tab-irisp:hover,.proc-tab.tab-irisp.active{
+      border-color:#8af0bd;filter:brightness(1.08);
+      box-shadow:0 0 24px rgba(47,205,130,.3);}
+
+    .proc-tab.tab-macri{border-color:#59b8ff;background:linear-gradient(135deg,#1874bb,#104c86);}
+    .proc-tab.tab-macri .pt-name{color:#fff;text-shadow:0 0 10px rgba(89,184,255,.6);}
+    .proc-tab.tab-macri:hover,.proc-tab.tab-macri.active{
+      border-color:#9bd5ff;filter:brightness(1.08);
+      box-shadow:0 0 24px rgba(44,150,230,.3);}
+
+    .proc-tab.tab-calidad{border-color:#ffc06d;background:linear-gradient(135deg,#c47520,#834713);}
+    .proc-tab.tab-calidad .pt-name{color:#fff;text-shadow:0 0 10px rgba(255,192,109,.55);}
+    .proc-tab.tab-calidad:hover,.proc-tab.tab-calidad.active{
+      border-color:#ffd89f;filter:brightness(1.08);
+      box-shadow:0 0 24px rgba(224,145,54,.3);}
+
+    /* Paneles de contenido */
+    .proc-panels{margin-bottom:20px;}
+    .proc-panel{display:none;border-radius:12px;overflow:hidden;border:1px solid var(--borde);}
+    .proc-panel.active{display:block;}
+
+    .pp-head{padding:18px 24px;display:flex;align-items:center;gap:14px;}
+    .pp-head .pp-icon{font-size:2rem;flex-shrink:0;}
+    .pp-head .pp-titulo{font-size:1.4rem;font-weight:900;line-height:1;}
+    .pp-head .pp-sub{font-size:0.8rem;opacity:.85;margin-top:4px;line-height:1.3;}
+    .pp-body{background:rgba(6,14,26,.5);padding:20px 24px;}
+
+    .pp-irisp .pp-head{background:linear-gradient(135deg,rgba(0,212,255,.22),rgba(0,212,255,.05));border-bottom:1px solid rgba(0,212,255,.3);}
+    .pp-irisp .pp-head .pp-titulo{color:var(--cyan);text-shadow:0 0 10px rgba(0,212,255,.6);}
+    .pp-macri .pp-head{background:linear-gradient(135deg,rgba(57,255,20,.18),rgba(57,255,20,.03));border-bottom:1px solid rgba(57,255,20,.25);}
+    .pp-macri .pp-head .pp-titulo{color:var(--neon);text-shadow:0 0 10px rgba(57,255,20,.6);}
+    .pp-calidad .pp-head{background:linear-gradient(135deg,rgba(0,200,81,.22),rgba(0,200,81,.04));border-bottom:1px solid rgba(0,200,81,.3);}
+    .pp-calidad .pp-head .pp-titulo{color:var(--verde2);text-shadow:0 0 10px rgba(0,200,81,.6);}
+
+    .pp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .pp-section-title{
+      font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;
+      color:var(--gris);margin-bottom:10px;display:flex;align-items:center;gap:8px;
+    }
+    .pp-section-title::before{content:'';width:16px;height:2px;border-radius:1px;}
+    .pp-irisp .pp-section-title::before{background:var(--cyan);}
+    .pp-macri .pp-section-title::before{background:var(--neon);}
+    .pp-calidad .pp-section-title::before{background:var(--verde2);}
+
+    .pp-text{font-size:0.82rem;line-height:1.65;color:var(--gris2);margin-bottom:14px;}
+    .pp-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+    .pp-list li{font-size:0.8rem;line-height:1.5;color:var(--gris2);
+      padding:7px 10px 7px 28px;position:relative;
+      border-radius:7px;}
+    .pp-list li::before{content:'✓';position:absolute;left:8px;font-weight:700;font-size:.82rem;}
+    .pp-irisp .pp-list li{background:rgba(0,212,255,.05);border-left:2px solid rgba(0,212,255,.3);}
+    .pp-irisp .pp-list li::before{color:var(--cyan);}
+    .pp-macri .pp-list li{background:rgba(57,255,20,.04);border-left:2px solid rgba(57,255,20,.25);}
+    .pp-macri .pp-list li::before{color:var(--neon);}
+    .pp-calidad .pp-list li{background:rgba(0,200,81,.05);border-left:2px solid rgba(0,200,81,.3);}
+    .pp-calidad .pp-list li::before{color:var(--verde2);}
+
+    .normativa-box{background:rgba(0,200,81,.08);border:1px solid rgba(0,200,81,.25);
+      border-radius:9px;padding:14px 16px;font-size:0.78rem;line-height:1.6;color:var(--gris2);margin-top:10px;}
+    .normativa-box strong{color:var(--verde2);}
+
+    .mapa-calor{width:100%;height:70px;border-radius:8px;overflow:hidden;margin:12px 0;
+      background:linear-gradient(135deg,#0a1628 0%,#1a3a5c 20%,#0d7a3a 35%,#f0d000 50%,#e05010 65%,#b00000 80%,#0a1628 100%);
+      display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,212,255,.2);}
+    .mapa-calor span{background:rgba(6,14,26,.65);color:var(--cyan);font-size:0.68rem;font-weight:700;
+      letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:9px;
+      text-shadow:0 0 8px rgba(0,212,255,.7);}
+
+    /* ══ BOTTOM ══ */
+    .bottom-wrap{display:grid;grid-template-columns:1fr 1fr;
+      border-top:2px solid var(--neon);
+      background:linear-gradient(rgba(6,14,26,.68),rgba(6,14,26,.68)),url('imagenes/fondo1.jpg') center/cover no-repeat;}
+    .bottom-col{padding:16px;}
+    .bottom-col + .bottom-col{border-left:1px solid var(--borde);}
+    .bc-title{font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;
+      border-bottom:1px solid var(--borde);padding-bottom:7px;margin-bottom:12px;
+      display:flex;align-items:center;gap:7px;}
+    .bc-title.cc{color:var(--cyan);text-shadow:0 0 8px rgba(0,212,255,.4);}
+    .bc-title.cn{color:var(--neon);text-shadow:0 0 8px rgba(57,255,20,.4);}
+    .bc-title.cv{color:var(--verde2);text-shadow:0 0 8px rgba(0,200,81,.4);}
+
+    .apps-row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:7px;}
+    .app-pill2{background:rgba(0,212,255,.08);border:1.5px solid var(--cyan);
+      color:var(--cyan);font-size:0.85rem;font-weight:800;
+      padding:9px 18px;border-radius:8px;
+      box-shadow:0 0 10px rgba(0,212,255,.2);text-shadow:0 0 8px rgba(0,212,255,.5);
+      display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;}
+    a.app-pill2:hover{background:rgba(0,212,255,.16);border-color:var(--cyan2);}
+    .apps-desc{font-size:0.68rem;line-height:1.5;color:var(--gris);margin-top:9px;}
+
+    .insumos-list{display:flex;flex-direction:column;gap:6px;}
+    .ins-item{display:flex;align-items:center;gap:8px;
+      background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.12);
+      border-radius:7px;padding:6px 10px;font-size:0.7rem;color:var(--gris2);}
+    .ins-item .ii-icon{font-size:1rem;flex-shrink:0;}
+    .ins-link{flex:1;color:inherit;text-decoration:none;}
+    .ins-link:hover{color:var(--cyan);}
+    .ins-download{color:var(--cyan);font-size:1rem;text-decoration:none;padding:2px 6px;}
+    .ins-download:hover{color:var(--blanco);}
+
+    /* ══ PIE ══ */
+    .colombia-bar{height:5px;background:linear-gradient(90deg,#FCD116 50%,#003087 25%,#CE1126 25%);}
+    .pie{background:var(--bg2);border-top:2px solid var(--cyan);padding:14px 28px;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .pie-left{font-size:0.88rem;font-style:italic;font-weight:600;color:var(--gris2);}
+    .pie-left span{color:var(--cyan);text-shadow:0 0 8px rgba(0,212,255,.5);}
+    .pie-center{font-size:0.8rem;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--gris);}
+    .pie-right{display:flex;align-items:center;gap:14px;}
+    .pie-right img{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--cyan);box-shadow:0 0 14px rgba(0,212,255,.4);}
+    .pie-right .pt-rep{display:block;font-size:0.63rem;color:var(--gris);letter-spacing:1.5px;text-transform:uppercase;}
+    .pie-right .pt-pol{display:block;font-size:0.88rem;font-weight:800;color:var(--blanco);}
+    .pie-right .pt-metro{display:block;font-size:0.7rem;color:var(--neon);font-weight:700;text-shadow:0 0 6px rgba(57,255,20,.5);}
+    .elaborado-por{background:var(--bg2);border-top:1px solid var(--borde);
+      padding:10px 24px;text-align:center;color:var(--gris2);font-size:0.82rem;}
+    .elaborado-por strong{color:var(--cyan);}
+
+    @media(max-width:960px){
+      .header{grid-template-columns:auto 1fr;} .h-tags{display:none;}
+      .sec12,.bottom-wrap{grid-template-columns:1fr;}
+      .proc-tabs{flex-wrap:wrap;}
+      .pp-grid{grid-template-columns:1fr;}
+      .central-tags{display:none;}
+    }
+
+    @media(max-width:760px){
+      .header{grid-template-columns:1fr;padding:16px 20px;}
+      .h-logo{flex-direction:column;justify-content:center;gap:6px;}
+      .h-logo-text{text-align:center;}
+      .h-logo-text .ht-rep{white-space:normal;}
+      .h-title .ht-cieps{font-size:3.8rem;letter-spacing:3px;}
+      .h-title .ht-mebog{font-size:1.8rem;letter-spacing:4px;}
+      .h-title .ht-sub{font-size:0.85rem;line-height:1.4;}
+      .conoc-map{grid-template-columns:1fr;}
+      .proc-tabs{flex-direction:column;}
+      .proc-tab{width:100%;}
+      .conoc-modal{max-height:90vh;overflow-y:auto;}
+      .modal-head{padding:16px;gap:10px;}
+      .modal-head .m-title{font-size:1.15rem;}
+      .modal-body{grid-template-columns:1fr;padding:16px;}
+      .modal-item{padding:12px;}
+      .apps-row2{grid-template-columns:1fr;}
+      .pie{justify-content:center;padding:14px 16px;}
+      .pie-center{letter-spacing:2px;text-align:center;}
+      .elaborado-por{padding:10px 16px;}
+    }
+
+    /* ══ ESCALA FUENTES CLAVE ══ */
+    .fa-label{font-size:1.05rem !important;}
+    .fa-content ul li{font-size:0.95rem !important;}
+    .conoc-head .c-title{font-size:0.88rem !important;}
+    .conoc-body ul li{font-size:0.88rem !important;}
+    .proc-tab .pt-name{font-size:1.4rem !important;}
+    .proc-tab .pt-sub{font-size:0.85rem !important;}
+    .pp-head .pp-titulo{font-size:1.5rem !important;}
+    .pp-head .pp-sub{font-size:0.9rem !important;}
+    .pp-text{font-size:0.95rem !important;}
+    .pp-list li{font-size:0.92rem !important;}
+    .pp-section-title{font-size:0.85rem !important;}
+    .bc-title{font-size:0.95rem !important;}
+    .app-pill2{font-size:1rem !important;}
+    .apps-desc{font-size:1rem !important;}
+    .ins-item{font-size:0.85rem !important;}
+    .pie-left{font-size:1rem !important;}
+    .pie-center{font-size:0.9rem !important;}
+    .pie-right .pt-pol{font-size:1rem !important;}
+    .pie-right .pt-metro{font-size:0.82rem !important;}
+    .procesos-title{font-size:1.3rem !important;}
+    .bogota-label .bl-ciudad{font-size:2rem !important;}
+    .bogota-label .bl-sub{font-size:0.85rem !important;}
+    .ct-tag{font-size:0.88rem !important;}
+    .normativa-box{font-size:0.9rem !important;}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="h-logo">
+      <img src="imagenes/logo.jpg" alt="Escudo Policía Nacional de Colombia"/>
+      <div class="h-logo-text">
+        <span class="ht-rep">República de Colombia</span>
+        <span class="ht-rep">Policía Nacional</span>
+        <span class="ht-lema">Dios y Patria</span>
+      </div>
+    </div>
+    <div class="h-title">
+      <div class="ht-cieps">CIEPS</div>
+      <div class="ht-mebog">MEBOG</div>
+      <div class="ht-sub">Centro de Información Estratégica Policial del Servicio</div>
+    </div>
+    <div class="h-tags">
+      <img src="imagenes/logo CIEPS.jpg" alt="Logo CIEPS"
+           style="height:140px;width:auto;object-fit:contain;
+                  filter:drop-shadow(0 0 14px rgba(0,212,255,.45));
+                  border-radius:8px;"/>
+    </div>
+  </div>
+
+  <!-- FUNCIONES + CONOCIMIENTOS -->
+  <div class="sec12">
+
+    <!-- FUNCIONES DESPLEGABLES -->
+    <div class="funciones">
+      <div class="sec-title"><span class="st-ic">◈</span><span>Funciones del Personal CIEPS</span></div>
+      <div class="func-accordion">
+
+        <div class="fa-item" id="f1">
+          <button class="fa-trigger" onclick="toggleFa('f1')">
+            <div class="fa-num">1</div>  
+            <span class="fa-label">Recolección y consolidación de información</span>
+            <span class="fa-arrow">▼</span>
+          </button>
+          <div class="fa-body"><div class="fa-content"><ul>
+            <li>Recopilar información de estaciones, SIJIN, SIPOL, Gaula y otras entidades.</li>
+            <li>Consolidar datos estadísticos sobre delitos, contravenciones y fenómenos de seguridad.</li>
+            <li>Verificar la calidad y confiabilidad de la información recibida.</li>
+          </ul></div></div>
+        </div>
+
+        <div class="fa-item" id="f2">
+          <button class="fa-trigger" onclick="toggleFa('f2')">
+            <div class="fa-num">2</div>
+            <span class="fa-label">Análisis estadístico y criminológico</span>
+            <span class="fa-arrow">▼</span>
+          </button>
+          <div class="fa-body"><div class="fa-content"><ul>
+            <li>Elaborar análisis de comportamiento delictivo.</li>
+            <li>Identificar tendencias, patrones y modalidades delincuenciales.</li>
+            <li>Generar indicadores de gestión operativa y preventiva.</li>
+            <li>Elaborar boletines estadísticos diarios, semanales y mensuales.</li>
+            <li>Realizar análisis comparativos por periodos.</li>
+          </ul></div></div>
+        </div>
+
+        <div class="fa-item" id="f3">
+          <button class="fa-trigger" onclick="toggleFa('f3')">
+            <div class="fa-num">3</div>
+            <span class="fa-label">Análisis geográfico y cartográfico</span>
+            <span class="fa-arrow">▼</span>
+          </button>
+          <div class="fa-body"><div class="fa-content"><ul>
+            <li>Georreferenciar hechos delictivos.</li>
+            <li>Elaborar mapas temáticos y de calor.</li>
+            <li>Identificar zonas críticas o "hot spots".</li>
+            <li>Apoyar la planeación del servicio policial mediante cartografía.</li>
+            <li>Actualizar capas geográficas y bases cartográficas.</li>
+          </ul></div></div>
+        </div>
+
+        <div class="fa-item" id="f4">
+          <button class="fa-trigger" onclick="toggleFa('f4')">
+            <div class="fa-num">4</div>
+            <span class="fa-label">Producción de documentos estratégicos</span>
+            <span class="fa-arrow">▼</span>
+          </button>
+          <div class="fa-body"><div class="fa-content"><ul>
+            <li>Elaborar informes ejecutivos para mandos institucionales.</li>
+            <li>Construir presentaciones para comités y consejos de seguridad.</li>
+            <li>Diseñar tableros de control e indicadores.</li>
+            <li>Generar alertas tempranas frente a comportamientos inusuales.</li>
+          </ul></div></div>
+        </div>
+
+        <div class="fa-item" id="f5">
+          <button class="fa-trigger" onclick="toggleFa('f5')">
+            <div class="fa-num">5</div>
+            <span class="fa-label">Apoyo a la toma de decisiones</span>
+            <span class="fa-arrow">▼</span>
+          </button>
+          <div class="fa-body"><div class="fa-content"><ul>
+            <li>Presentar análisis situacionales.</li>
+            <li>Recomendar estrategias operativas basadas en evidencia.</li>
+            <li>Apoyar la focalización del servicio policial.</li>
+            <li>Realizar seguimiento a planes operativos y resultados obtenidos.</li>
+          </ul></div></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONOCIMIENTOS -->
+    <div class="conocimientos">
+      <div class="sec-title"><span class="st-ic">◈</span><span>Conocimientos del Personal CIEPS</span></div>
+      <div class="conoc-sub">Conocimientos técnicos — clic en cada área para ver el detalle</div>
+
+      <!-- MAPA MENTAL: grid 2 columnas, cerebro solo como fondo -->
+      <div class="conoc-map">
+
+        <div class="conoc-card" onclick="openModal('estadistica')">
+          <div class="conoc-head cc1"><span class="c-icon">📈</span><span class="c-title">Estadística</span><span class="c-hint">ver más →</span></div>
+          <div class="conoc-preview">Estadística descriptiva · Tendencia central · Series de tiempo · Proyecciones · Indicadores</div>
+        </div>
+
+        <div class="conoc-card" onclick="openModal('sig')">
+          <div class="conoc-head cc2"><span class="c-icon">🌐</span><span class="c-title">Sistemas de Información Geográfica (SIG)</span><span class="c-hint">ver más →</span></div>
+          <div class="conoc-preview">ArcGIS · Google Earth Pro · IDECA · Análisis espacial</div>
+        </div>
+
+        <div class="conoc-card" onclick="openModal('ofimatica')">
+          <div class="conoc-head cc3"><span class="c-icon">💻</span><span class="c-title">Herramientas Ofimáticas</span><span class="c-hint">ver más →</span></div>
+          <div class="conoc-preview">Excel avanzado · Tablas dinámicas · Power Query · Power BI · PowerPoint · Word</div>
+        </div>
+
+        <div class="conoc-card" onclick="openModal('analisis')">
+          <div class="conoc-head cc4"><span class="c-icon">🔍</span><span class="c-title">Análisis de Información</span><span class="c-hint">ver más →</span></div>
+          <div class="conoc-preview">Migración de datos · Análisis criminal · Bases de datos · Indicadores · Diagnósticos</div>
+        </div>
+
+        <div class="conoc-card full" onclick="openModal('sistemas')">
+          <div class="conoc-head cc5"><span class="c-icon">🏛️</span><span class="c-title">Sistemas Institucionales</span><span class="c-hint">ver más →</span></div>
+          <div class="conoc-preview">Aplicativos PNC · Sistemas de registro estadístico · Plataformas de consulta y monitoreo institucional</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODALES DE CONOCIMIENTO ══ -->
+
+  <!-- Modal Estadística -->
+  <div class="conoc-modal-bg" id="modal-estadistica" onclick="closeModalBg(event,'modal-estadistica')">
+    <div class="conoc-modal modal-cc1">
+      <div class="modal-head">
+        <span class="m-icon">📈</span>
+        <div><div class="m-title">Estadística</div><div class="m-sub">Conocimientos técnicos en análisis estadístico</div></div>
+        <button class="modal-close" onclick="closeModal('modal-estadistica')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-item"><div class="mi-num">1</div><div class="mi-text"><strong>Estadística descriptiva</strong> — Resumen y descripción de datos mediante medidas numéricas y gráficas.</div></div>
+        <div class="modal-item"><div class="mi-num">2</div><div class="mi-text"><strong>Medidas de tendencia central</strong> — Media, mediana y moda para caracterizar la distribución de datos.</div></div>
+        <div class="modal-item"><div class="mi-num">3</div><div class="mi-text"><strong>Análisis de series de tiempo</strong> — Seguimiento de variables estadísticas a lo largo del tiempo.</div></div>
+        <div class="modal-item"><div class="mi-num">4</div><div class="mi-text"><strong>Proyecciones y tendencias</strong> — Modelos de estimación de comportamiento delictivo futuro.</div></div>
+        <div class="modal-item"><div class="mi-num">5</div><div class="mi-text"><strong>Indicadores de gestión</strong> — Métricas para medir eficiencia y efectividad del servicio policial.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal SIG -->
+  <div class="conoc-modal-bg" id="modal-sig" onclick="closeModalBg(event,'modal-sig')">
+    <div class="conoc-modal modal-cc2">
+      <div class="modal-head">
+        <span class="m-icon">🌐</span>
+        <div><div class="m-title">Sistemas de Información Geográfica (SIG)</div><div class="m-sub">Herramientas de análisis espacial y cartografía</div></div>
+        <button class="modal-close" onclick="closeModal('modal-sig')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-item"><div class="mi-num">1</div><div class="mi-text"><strong>ArcGIS</strong> — Plataforma líder en análisis espacial y producción de mapas temáticos.</div></div>
+        <div class="modal-item"><div class="mi-num">2</div><div class="mi-text"><strong>Google Earth Pro</strong> — Visualización geoespacial y análisis de áreas de influencia.</div></div>
+        <div class="modal-item"><div class="mi-num">3</div><div class="mi-text"><strong>IDECA</strong> — Sistema integral que reúne datos, estándares, tecnologías y políticas para facilitar la producción, acceso y uso de información geográfica oficial, con el fin de apoyar la planeación, gestión y desarrollo de la ciudad.</div></div>
+        <div class="modal-item"><div class="mi-num">4</div><div class="mi-text"><strong>Análisis espacial</strong> — Identificación de patrones, hot spots y zonas de concentración delictiva.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Ofimática -->
+  <div class="conoc-modal-bg" id="modal-ofimatica" onclick="closeModalBg(event,'modal-ofimatica')">
+    <div class="conoc-modal modal-cc3">
+      <div class="modal-head">
+        <span class="m-icon">💻</span>
+        <div><div class="m-title">Herramientas Ofimáticas</div><div class="m-sub">Suite Microsoft Office y herramientas de análisis de datos</div></div>
+        <button class="modal-close" onclick="closeModal('modal-ofimatica')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-item"><div class="mi-num">1</div><div class="mi-text"><strong>Microsoft Excel avanzado</strong> — Análisis de datos, fórmulas complejas y automatización.</div></div>
+        <div class="modal-item"><div class="mi-num">2</div><div class="mi-text"><strong>Tablas dinámicas</strong> — Resumen y análisis interactivo de grandes volúmenes de datos.</div></div>
+        <div class="modal-item"><div class="mi-num">3</div><div class="mi-text"><strong>Power Query</strong> — Transformación y limpieza de datos desde múltiples fuentes.</div></div>
+        <div class="modal-item"><div class="mi-num">4</div><div class="mi-text"><strong>Power BI</strong> — Visualización de datos y construcción de tableros de control interactivos.</div></div>
+        <div class="modal-item"><div class="mi-num">5</div><div class="mi-text"><strong>Microsoft PowerPoint / Word</strong> — Producción de informes ejecutivos y presentaciones institucionales.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Análisis -->
+  <div class="conoc-modal-bg" id="modal-analisis" onclick="closeModalBg(event,'modal-analisis')">
+    <div class="conoc-modal modal-cc4">
+      <div class="modal-head">
+        <span class="m-icon">🔍</span>
+        <div><div class="m-title">Análisis de Información</div><div class="m-sub">Inteligencia criminal y gestión de datos</div></div>
+        <button class="modal-close" onclick="closeModal('modal-analisis')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-item"><div class="mi-num">1</div><div class="mi-text"><strong>Migración de datos</strong> — Traslado de información entre sistemas o plataformas, preservando su integridad, consistencia y calidad.</div></div>
+        <div class="modal-item"><div class="mi-num">2</div><div class="mi-text"><strong>Análisis criminal</strong> — Estudio sistemático del delito para apoyar la toma de decisiones operacionales.</div></div>
+        <div class="modal-item"><div class="mi-num">3</div><div class="mi-text"><strong>Gestión de bases de datos</strong> — Administración, consulta y mantenimiento de repositorios de información.</div></div>
+        <div class="modal-item"><div class="mi-num">4</div><div class="mi-text"><strong>Interpretación de indicadores</strong> — Lectura y análisis de métricas de seguridad para generar recomendaciones.</div></div>
+        <div class="modal-item"><div class="mi-num">5</div><div class="mi-text"><strong>Diagnósticos de seguridad</strong> — Elaboración de documentos analíticos sobre la situación de seguridad territorial.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sistemas Institucionales -->
+  <div class="conoc-modal-bg" id="modal-sistemas" onclick="closeModalBg(event,'modal-sistemas')">
+    <div class="conoc-modal modal-cc5">
+      <div class="modal-head">
+        <span class="m-icon">🏛️</span>
+        <div><div class="m-title">Sistemas Institucionales</div><div class="m-sub">Plataformas tecnológicas de la Policía Nacional</div></div>
+        <button class="modal-close" onclick="closeModal('modal-sistemas')">✕</button>
+      </div>
+      <div class="modal-body modal-body single">
+        <div class="modal-item"><div class="mi-num">1</div><div class="mi-text"><strong>Aplicativos de la Policía Nacional</strong> — Conocimiento y manejo de los sistemas propios de la institución para el registro y consulta de información.</div></div>
+        <div class="modal-item"><div class="mi-num">2</div><div class="mi-text"><strong>Sistemas de registro estadístico</strong> — Plataformas para el ingreso, validación y consulta de datos estadísticos sobre delitos y contravenciones.</div></div>
+        <div class="modal-item"><div class="mi-num">3</div><div class="mi-text"><strong>Plataformas de consulta y monitoreo institucional</strong> — Herramientas de seguimiento en tiempo real a indicadores operativos y de convivencia.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <div class="central-img"></div>
+    <div class="central-overlay"></div>
+    <div class="central-lines"></div>
+    <div class="bogota-label">
+      <div class="bl-ciudad">BOGOTÁ</div>
+      <div class="bl-sub">Territorio de Todos</div>
+    </div>
+    <div class="central-tags">
+      <div class="ct-tag">Análisis</div>
+      <div class="ct-tag">Territorio</div>
+      <div class="ct-tag">Planeación</div>
+      <div class="ct-tag">Resultados</div>
+    </div>
+    <div class="central-content"></div>
+  </div>
+
+  <!-- PROCESOS ESTRATÉGICOS -->
+  <div class="procesos-wrap">
+    <div class="procesos-title">◈ PROCESOS ESTRATÉGICOS DE LA SALA CIEPS ◈</div>
+
+    <!-- BOTONES DE SELECCIÓN -->
+    <div class="proc-tabs">
+      <div class="proc-tab tab-irisp" onclick="openImgModal('irisp')">
+        <div class="pt-icon">📋</div>
+        <div class="pt-name">IRIS P1</div>
+        <div class="pt-sub">Instrumento de Recolección de Información para el Seguimiento Policial</div>
+      </div>
+      <div class="proc-tab tab-macri" onclick="openImgModal('macri')">
+        <div class="pt-icon">🗺️</div>
+        <div class="pt-name">MACRI</div>
+        <div class="pt-sub">Mapa Criminal Institucional</div>
+      </div>
+      <div class="proc-tab tab-calidad" onclick="openImgModal('calidad')">
+        <div class="pt-icon">✅</div>
+        <div class="pt-name">Calidad del Dato</div>
+        <div class="pt-sub">Verificación y validación de información institucional</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom-wrap">
+    <div class="bottom-col">
+      <div class="bc-title cn">💾 Aplicativos utilizados</div>
+      <div class="apps-row2">
+        <span class="app-pill2">SIGMA</span>
+        <a class="app-pill2" href="https://srvcnpc.policia.gov.co/CNPC/Login.aspx?ReturnUrl=%2fCnpc%2ffrm_cnp_reportes.aspx#no-back-button" target="_blank" rel="noopener noreferrer">RNMC</a>
+        <span class="app-pill2">RNMC 2.0</span>
+        <a class="app-pill2" href="https://dijinweb.policia.gov.co/macri/" target="_blank" rel="noopener noreferrer">MACRI</a>
+        <a class="app-pill2" href="https://ponaldata.policia.gov.co/#/signin" target="_blank" rel="noopener noreferrer">ANDES</a>
+        <a class="app-pill2" href="https://app.ia.policia.gov.co/login?p=/" target="_blank" rel="noopener noreferrer">IAPOL</a>
+        <a class="app-pill2" href="https://siedco.policia.gov.co/siedco/!inicio.html" target="_blank" rel="noopener noreferrer">SIEDCO</a>
+        <a class="app-pill2" href="https://sisec.policia.gov.co/" target="_blank" rel="noopener noreferrer">IRIS P1</a>
+      </div>
+      <p class="apps-desc">Permiten la administración, control, consulta y seguimiento de los registros institucionales para la gestión de la calidad de la información.</p>
+    </div>
+    <div class="bottom-col">
+      <div class="bc-title cv">📂 Insumos estratégicos</div>
+      <div class="insumos-list">
+        <div class="ins-item">
+          <span class="ii-icon">📊</span>
+          <a class="ins-link" href="PDF/Presentacion Comando.pdf" target="_blank" rel="noopener noreferrer">Presentación Comando</a>
+          <a class="ins-download" href="PDF/Presentacion Comando.pdf" download aria-label="Descargar Presentación Comando" title="Descargar">⬇</a>
+        </div>
+        <div class="ins-item">
+          <span class="ii-icon">📰</span>
+          <a class="ins-link" href="PDF/BOLETIN OFENSIVA 24-7.pdf" target="_blank" rel="noopener noreferrer">Boletín Ofensiva 24-7</a>
+          <a class="ins-download" href="PDF/BOLETIN OFENSIVA 24-7.pdf" download aria-label="Descargar Boletín Ofensiva 24-7" title="Descargar">⬇</a>
+        </div>
+        <div class="ins-item">
+          <span class="ii-icon">📋</span>
+          <a class="ins-link" href="PDF/Tablero de Control Homicidio.pdf" target="_blank" rel="noopener noreferrer">Tablero de Control Homicidio</a>
+          <a class="ins-download" href="PDF/Tablero de Control Homicidio.pdf" download aria-label="Descargar Tablero de Control Homicidio" title="Descargar">⬇</a>
+        </div>
+        <div class="ins-item">
+          <span class="ii-icon">📅</span>
+          <a class="ins-link" href="PDF/Historico Dia a Dia.pdf" target="_blank" rel="noopener noreferrer">Histórico Día a Día</a>
+          <a class="ins-download" href="PDF/Historico Dia a Dia.pdf" download aria-label="Descargar Histórico Día a Día" title="Descargar">⬇</a>
+        </div>
+        <div class="ins-item">
+          <span class="ii-icon">🗄️</span>
+          <a class="ins-link" href="PDF/POS%20BASE%20MEBOG.pdf" target="_blank" rel="noopener noreferrer">POS BASE MEBOG</a>
+          <a class="ins-download" href="PDF/POS%20BASE%20MEBOG.pdf" download aria-label="Descargar POS BASE MEBOG" title="Descargar">⬇</a>
+        </div>
+        <div class="ins-item">
+          <span class="ii-icon">📈</span>
+          <a class="ins-link" href="PDF/Proyeccion%20operativa%20SEM%20.pptx" target="_blank" rel="noopener noreferrer">Proyección Operativa SEM</a>
+          <a class="ins-download" href="PDF/Proyeccion%20operativa%20SEM%20.pptx" download aria-label="Descargar Proyección Operativa SEM" title="Descargar">⬇</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="colombia-bar"></div>
+  <div class="pie">
+    <div class="pie-left"><span>"</span>Más que datos, seguridad para la gente<span>"</span></div>
+    <div class="pie-center">POLICÍA &nbsp;NACIONAL &nbsp;DE &nbsp;COLOMBIA</div>
+    <div class="pie-right">
+      <img src="imagenes/logo.jpg" alt="Escudo Policía Nacional"/>
+      <div>
+        <span class="pt-rep">República de Colombia</span>
+        <span class="pt-pol">Policía Nacional</span>
+        <span class="pt-metro">Metropolitana de Bogotá</span>
+      </div>
+    </div>
+  </div>
+  <div class="elaborado-por">Elaborado por: <strong>SI. Yilver Cuellar Delgado</strong> — Analista CIEPS MEBOG</div>
+
+</div>
+
+<!-- ══ MODAL IMAGEN IRIS P1 ══ -->
+<div class="img-modal-bg" id="imgmodal-irisp" onclick="closeImgModalBg(event,'imgmodal-irisp')">
+  <div class="img-modal-bar">
+    <span class="img-modal-title">📋 &nbsp;IRIS P1</span>
+    <button class="img-close-btn" onclick="closeImgModal('imgmodal-irisp')">✕ Cerrar</button>
+  </div>
+  <div class="img-modal-wrap">
+    <img src="imagenes/IRIS P1.png" alt="IRIS P1"/>
+  </div>
+</div>
+
+<!-- ══ MODAL IMAGEN MACRI ══ -->
+<div class="img-modal-bg" id="imgmodal-macri" onclick="closeImgModalBg(event,'imgmodal-macri')">
+  <div class="img-modal-bar">
+    <span class="img-modal-title macri-t">🗺️ &nbsp;MACRI — Mapa Criminal Institucional</span>
+    <button class="img-close-btn" onclick="closeImgModal('imgmodal-macri')">✕ Cerrar</button>
+  </div>
+  <div class="img-modal-wrap">
+    <img src="imagenes/MACRI.png" alt="MACRI - Mapa Criminal Institucional"/>
+  </div>
+</div>
+
+<!-- ══ MODAL IMAGEN CALIDAD DEL DATO ══ -->
+<div class="img-modal-bg" id="imgmodal-calidad" onclick="closeImgModalBg(event,'imgmodal-calidad')">
+  <div class="img-modal-bar">
+    <span class="img-modal-title calidad-t">✅ &nbsp;Calidad del Dato</span>
+    <button class="img-close-btn" onclick="closeImgModal('imgmodal-calidad')">✕ Cerrar</button>
+  </div>
+  <div class="img-modal-wrap">
+    <img src="imagenes/calidad del dato.png" alt="Calidad del Dato"/>
+  </div>
+</div>
+
+<script>
+  /* Funciones desplegables — solo una abierta a la vez */
+  function toggleFa(id) {
+    const item = document.getElementById(id);
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.fa-item').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* Modales de conocimiento */
+  function openModal(name) {
+    document.getElementById('modal-' + name).classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  function closeModalBg(e, id) {
+    if (e.target === document.getElementById(id)) closeModal(id);
+  }
+
+  /* Modales de imagen (IRIS P1 / MACRI / Calidad del Dato) */
+  function openImgModal(name) {
+    document.getElementById('imgmodal-' + name).classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeImgModal(id) {
+    document.getElementById(id).classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  function closeImgModalBg(e, id) {
+    if (e.target === document.getElementById(id)) closeImgModal(id);
+  }
+
+  /* Cerrar con ESC — todos los modales */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.conoc-modal-bg.show').forEach(m => {
+        m.classList.remove('show');
+      });
+      document.querySelectorAll('.img-modal-bg.show').forEach(m => {
+        m.classList.remove('show');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+</body>
+</html>

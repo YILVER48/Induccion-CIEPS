@@ -1,0 +1,30 @@
+.funciones-container{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.funciones-container details{
+    width:250px;
+    background:#0c2340;
+    color:white;
+    border-radius:15px;
+    padding:15px;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.funciones-container details:hover{
+    transform:translateY(-8px);
+}
+
+.funciones-container summary{
+    font-size:17px;
+    font-weight:bold;
+    list-style:none;
+}
+
+.funciones-container ul{
+    margin-top:15px;
+}
